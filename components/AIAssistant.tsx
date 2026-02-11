@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Sparkles, Bot } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Product } from '../types';
 
 interface AIAssistantProps {
@@ -32,8 +32,13 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ products }) => {
     setIsTyping(true);
 
     try {
-      // The API key MUST be obtained exclusively from process.env.API_KEY as per system guidelines.
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      // Use Vite environment variable - works in both dev and production
+      const apiKey = import.meta.env.VITE_API_KEY;
+      if (!apiKey) {
+        throw new Error("API Key not configured");
+      }
+      
+      const ai = new GoogleGenerativeAI({ apiKey });
       
       // Limit product context to provide a concise catalog snapshot for the AI
       const contextItems = products.slice(0, 15).map(p => 
@@ -41,10 +46,9 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ products }) => {
       ).join('\n');
       
       const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-1.5-flash',
         contents: [{ role: 'user', parts: [{ text: userMsg }] }],
-        config: {
-          systemInstruction: `You are "ProBot", the elegant AI shopping concierge for Triship.
+        systemInstruction: `You are "ProBot", the elegant AI shopping concierge for Triship.
           
           Store Context:
           Triship is a high-end dropshipping destination for furniture, decor, and electronics.
@@ -59,11 +63,10 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ products }) => {
           4. If a requested item isn't available, suggest a similar luxury alternative from our collection.
           5. Keep responses elegant and concise.
           6. Focus on helping with product discovery, pricing, and general store inquiries.`
-        }
       });
 
-      // response.text is a property, not a method.
-      const botResponse = response.text;
+      // response.text() is a method
+      const botResponse = response.text();
       
       if (!botResponse) {
         throw new Error("Empty response");
