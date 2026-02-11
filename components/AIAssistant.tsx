@@ -33,25 +33,25 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ products }) => {
 
     try {
       // Use Vite environment variable - works in both dev and production
-      const apiKey = import.meta.env.VITE_API_KEY;
+      const apiKey = import.meta.env.VITE_API_KEY as string;
       if (!apiKey) {
         throw new Error("API Key not configured");
       }
       
-      const ai = new GoogleGenerativeAI({ apiKey });
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
       
       // Limit product context to provide a concise catalog snapshot for the AI
       const contextItems = products.slice(0, 15).map(p => 
         `- ${p.name}: $${p.price} (${p.category}). ${p.description.substring(0, 80)}...`
       ).join('\n');
       
-      const response = await ai.models.generateContent({
-        model: 'gemini-1.5-flash',
+      const result = await model.generateContent({
         contents: [{ role: 'user', parts: [{ text: userMsg }] }],
         systemInstruction: `You are "ProBot", the elegant AI shopping concierge for Triship.
           
           Store Context:
-          Triship is a high-end dropshipping destination for furniture, decor, and electronics.
+          Triship is a high-end dropshipping destination for clothes and accessories.
           
           Our Current Featured Catalog:
           ${contextItems}
@@ -65,8 +65,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ products }) => {
           6. Focus on helping with product discovery, pricing, and general store inquiries.`
       });
 
-      // response.text() is a method
-      const botResponse = response.text();
+      // Get text from response
+      const botResponse = result.response.text();
       
       if (!botResponse) {
         throw new Error("Empty response");
