@@ -513,15 +513,19 @@ export const api = {
     try {
       const account = await api.createStaffAccount(staffEmail, username, password);
       try {
-        await emailjs.send('service_nex2d4a', 'template_zxzuf8q', {
+        const emailParams = {
           to_email: staffEmail,
-          name: username,
-          email: staffEmail,
-          username: username,
-          password: password
-        });
+          staff_name: username,
+          staff_email: staffEmail,
+          staff_username: username,
+          staff_password: password
+        };
+        console.log('Sending staff invitation email:', emailParams);
+        const response = await emailjs.send('service_nex2d4a', 'template_zxzuf8q', emailParams);
+        console.log('EmailJS response:', response);
         return { success: true, accountId: account.id, emailSent: true };
-      } catch {
+      } catch (error) {
+        console.error('Email sending failed:', error);
         return { success: true, accountId: account.id, emailSent: false };
       }
     } catch (err) {
