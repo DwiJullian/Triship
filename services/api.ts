@@ -512,22 +512,21 @@ export const api = {
   sendStaffInvitation: async (staffEmail: string, username: string, password: string) => {
     try {
       const account = await api.createStaffAccount(staffEmail, username, password);
-      try {
-        const emailParams = {
-          to_email: staffEmail,
-          staff_name: username,
-          staff_email: staffEmail,
-          staff_username: username,
-          staff_password: password
-        };
-        console.log('Sending staff invitation email:', emailParams);
-        const response = await emailjs.send('service_nex2d4a', 'template_zxzuf8q', emailParams);
-        console.log('EmailJS response:', response);
-        return { success: true, accountId: account.id, emailSent: true };
-      } catch (error) {
-        console.error('Email sending failed:', error);
-        return { success: true, accountId: account.id, emailSent: false };
-      }
+      
+      // For now, skip email sending due to EmailJS 412 error
+      // TODO: Fix EmailJS Service/Template IDs
+      console.warn('Staff account created but email skipped. Credentials:',  {
+        email: staffEmail,
+        username: username,
+        password: password
+      });
+      
+      return { 
+        success: true, 
+        accountId: account.id, 
+        emailSent: false,
+        note: 'Please manually inform staff with username and password above'
+      };
     } catch (err) {
       throw err;
     }

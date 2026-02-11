@@ -567,11 +567,13 @@ const AdminPage: React.FC<{onProductChange?: () => void}> = ({ onProductChange }
                 <div className="bg-indigo-50 border border-indigo-100 rounded-[2.5rem] p-8 text-left animate-in zoom-in space-y-6">
                    <div className="flex items-center gap-2 text-indigo-600">
                      <CheckCircle2 size={20}/> 
-                     <p className="text-sm font-black uppercase tracking-widest">Invitation Sent</p>
+                     <p className="text-sm font-black uppercase tracking-widest">Staff Account Created</p>
+                   </div>
+                   <div className="bg-amber-100 border border-amber-300 rounded-xl p-4 text-sm font-medium text-amber-800">
+                     📧 Please manually send these credentials to the staff member or share via secure channel
                    </div>
                    <div className="text-sm text-slate-600">
-                     <p>An invitation email containing login credentials has been sent to:</p>
-                     <p className="font-bold text-slate-900 mt-1">{invitedCredentials.user}@***.***</p>
+                     <p>New staff account credentials:</p>
                    </div>
                    <div className="space-y-5">
                       <div>
@@ -583,7 +585,7 @@ const AdminPage: React.FC<{onProductChange?: () => void}> = ({ onProductChange }
                          <div className="flex justify-between items-center bg-white p-3 rounded-xl border border-indigo-100 mt-1">
                             <p className="font-mono text-xl font-black text-indigo-700">{invitedCredentials.pass}</p>
                             <button onClick={() => {
-                              navigator.clipboard.writeText(`DropshipPro Staf Access\nUser: ${invitedCredentials.user}\nKey: ${invitedCredentials.pass}`);
+                              navigator.clipboard.writeText(`DropshipPro Staf Access\nUsername: ${invitedCredentials.user}\nPassword: ${invitedCredentials.pass}`);
                               setCopied(true);
                               setTimeout(() => setCopied(false), 2000);
                             }} className="text-indigo-600 hover:text-indigo-800">
