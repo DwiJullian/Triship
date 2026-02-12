@@ -226,6 +226,26 @@ export const api = {
       for (const item of orderData.items) {
         await updateProductSalesCount(item.id, item.quantity);
       }
+      
+      // Send order confirmation email to customer
+      try {
+        const productsList = orderData.items.map((item: CartItem) => `${item.name} x${item.quantity}`).join(', ');
+        await emailjs.send('service_mp3u1vk', 'template_order_confirmation', {
+          customer_name: orderData.customer_info.name,
+          customer_email: orderData.customer_info.email,
+          order_id: orderPayload.id,
+          order_date: new Date().toLocaleDateString('id-ID'),
+          products: productsList,
+          total_amount: orderData.total_price.toLocaleString(),
+          payment_method: orderData.payment_method,
+          shipping_address: orderData.customer_info.address,
+          status: 'Order Confirmed'
+        });
+        console.log('[createOrder] Confirmation email sent to customer');
+      } catch (emailErr) {
+        console.warn('[createOrder] Failed to send confirmation email:', emailErr);
+      }
+      
       return { success: true, orderId: data[0].id };
     } catch (dbError) {
       console.warn('[createOrder] Supabase insert failed, saving locally:', dbError);
@@ -234,6 +254,26 @@ export const api = {
       for (const item of orderData.items) {
         await updateProductSalesCount(item.id, item.quantity);
       }
+      
+      // Send order confirmation email to customer even if saved locally
+      try {
+        const productsList = orderData.items.map((item: CartItem) => `${item.name} x${item.quantity}`).join(', ');
+        await emailjs.send('service_mp3u1vk', 'template_order_confirmation', {
+          customer_name: orderData.customer_info.name,
+          customer_email: orderData.customer_info.email,
+          order_id: orderPayload.id,
+          order_date: new Date().toLocaleDateString('id-ID'),
+          products: productsList,
+          total_amount: orderData.total_price.toLocaleString(),
+          payment_method: orderData.payment_method,
+          shipping_address: orderData.customer_info.address,
+          status: 'Order Confirmed'
+        });
+        console.log('[createOrder] Confirmation email sent to customer');
+      } catch (emailErr) {
+        console.warn('[createOrder] Failed to send confirmation email:', emailErr);
+      }
+      
       return { success: true, orderId: orderPayload.id };
     }
   },
@@ -491,8 +531,8 @@ export const api = {
     try {
       await supabase.from('contact_messages').insert([messagePayload]).select();
       try {
-        await emailjs.send('service_nex2d4a', 'template_ltzt0yi', {
-          to_email: 'trishop772@gmail.com',
+        await emailjs.send('service_mp3u1vk', 'template_ltzt0yi', {
+          to_email: 'triship772@gmail.com',
           name: sanitizedData.name,
           time: messagePayload.created_at,
           from_name: sanitizedData.name,
@@ -518,7 +558,7 @@ export const api = {
       // Attempt to send staff invitation email using EmailJS
       try {
         const nameForTemplate = username || staffEmail.split('@')[0];
-        await emailjs.send('service_nex2d4a', 'template_zxzuf8q', {
+        await emailjs.send('service_mp3u1vk', 'template_zxzuf8q', {
           name: nameForTemplate,
           username,
           password,

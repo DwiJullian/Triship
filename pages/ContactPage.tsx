@@ -64,7 +64,7 @@ const ContactPage: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Email Inquiry</h4>
-                  <p className="font-bold text-slate-900 text-lg">trishop772@gmail.com</p>
+                  <p className="font-bold text-slate-900 text-lg">triship772@gmail.com</p>
                 </div>
               </div>
 
@@ -101,7 +101,7 @@ const ContactPage: React.FC = () => {
                 </div>
                 <h3 className="text-3xl font-black text-slate-900 mb-4 heading-font">Message Sent Successfully!</h3>
                 <p className="text-slate-500 max-w-xs mx-auto mb-8 text-lg">
-                  Your message has been received and sent to trishop772@gmail.com. Our team will get back to you shortly.
+                  Your message has been received and sent to triship772@gmail.com. Our team will get back to you shortly.
                 </p>
                 <button 
                   onClick={() => setIsSent(false)}
