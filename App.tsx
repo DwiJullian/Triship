@@ -11,7 +11,6 @@ import AdminPage from './pages/AdminPage';
 import HistoryPage from './pages/HistoryPage';
 import { ShippingPolicy, ReturnsPolicy, TermsOfService, PrivacyPolicy } from './pages/PolicyPages';
 import ProductDetailModal from './components/ProductDetailModal';
-import AIAssistant from './components/AIAssistant';
 import { Product, CartItem } from './types';
 import { api } from './services/api';
 
@@ -55,7 +54,7 @@ const AppContent: React.FC<{
         </Routes>
       </main>
       {!isAdminPage && <Footer />}
-      {!isAdminPage && <AIAssistant products={products} />}
+      {/* AI assistant removed */}
     </div>
   );
 };
