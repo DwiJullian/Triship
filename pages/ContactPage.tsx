@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Globe, Sparkles, ArrowRight, AlertTriangle, X } from 'lucide-react';
+import { Mail, Instagram, MapPin, Send, CheckCircle2, Globe, Sparkles, ArrowRight, AlertTriangle, X } from 'lucide-react';
 import { api } from '../services/api';
 
 const ContactPage: React.FC = () => {
@@ -69,13 +69,15 @@ const ContactPage: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-5 group">
-                <div className="bg-white p-4 rounded-2xl shadow-sm text-amber-600 border border-slate-100 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
-                  <Phone size={22} />
-                </div>
-                <div>
-                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Phone Support</h4>
-                  <p className="font-bold text-slate-900 text-lg">+62 812 3456 7890</p>
-                </div>
+                <a href="https://www.instagram.com/trishop772?igsh=ZWIwZjZ5NWlmdHZq&utm_source=qr" target="_blank" rel="noopener noreferrer" className="flex items-center gap-5 group w-full hover:no-underline">
+                  <div className="bg-white p-4 rounded-2xl shadow-sm text-amber-600 border border-slate-100 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
+                    <Instagram size={22} />
+                  </div>
+                  <div>
+                    <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Instagram</h4>
+                    <p className="font-bold text-slate-900 text-lg">@trishop772</p>
+                  </div>
+                </a>
               </div>
 
               <div className="flex items-center gap-5 group">
@@ -84,7 +86,7 @@ const ContactPage: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Global HQ</h4>
-                  <p className="font-bold text-slate-900 text-lg">District 8, SCBD Park, Jakarta</p>
+                  <p className="font-bold text-slate-900 text-lg">Sepinggan Baru, Balikpapan Selatan</p>
                 </div>
               </div>
             </div>

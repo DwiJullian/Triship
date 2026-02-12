@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { Mail, MapPin, Instagram, ShieldCheck } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -42,11 +42,13 @@ const Footer: React.FC = () => {
             <ul className="space-y-6 text-slate-400 text-sm">
               <li className="flex items-start space-x-4">
                 <MapPin size={20} className="text-amber-500 flex-shrink-0" />
-                <span>District 8, SCBD Park, Senayan, Jakarta Selatan, 12190</span>
+                <span>Sepinggan Baru, Balikpapan Selatan, Indonesia 76115</span>
               </li>
               <li className="flex items-center space-x-4">
-                <Phone size={20} className="text-amber-500 flex-shrink-0" />
-                <span>+62 21 555 0123</span>
+                <a href="https://www.instagram.com/trishop772?igsh=ZWIwZjZ5NWlmdHZq&utm_source=qr" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 hover:text-amber-400 transition-colors">
+                  <Instagram size={20} className="text-amber-500 flex-shrink-0" />
+                  <span>@trishop772</span>
+                </a>
               </li>
               <li className="flex items-center space-x-4">
                 <Mail size={20} className="text-amber-500 flex-shrink-0" />
