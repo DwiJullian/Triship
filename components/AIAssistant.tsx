@@ -35,7 +35,10 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ products }) => {
       // Use Vite environment variable - works in both dev and production
       const apiKey = import.meta.env.VITE_API_KEY as string;
       if (!apiKey) {
-        throw new Error("API Key not configured");
+        console.error('AIAssistant: VITE_API_KEY is missing in runtime environment');
+        setMessages(prev => [...prev, { role: 'bot', text: "Assistant unavailable: API key not configured. Please contact the site administrator." }]);
+        setIsTyping(false);
+        return;
       }
       
       const genAI = new GoogleGenerativeAI(apiKey);
@@ -75,7 +78,15 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ products }) => {
       setMessages(prev => [...prev, { role: 'bot', text: botResponse }]);
     } catch (error: any) {
       console.error("Gemini Assistant Interaction Failed:", error);
-      setMessages(prev => [...prev, { role: 'bot', text: "Sorry, I’m experiencing a technical issue."}]);
+
+      // Provide slightly more detail during development to aid debugging,
+      // but keep the production message generic to avoid leaking internals.
+      const devMessage = error?.message ? `Error: ${error.message}` : '';
+      const userMessage = import.meta.env.MODE === 'development'
+        ? `Sorry, I’m experiencing a technical issue. ${devMessage}`
+        : 'Sorry, I’m experiencing a technical issue.';
+
+      setMessages(prev => [...prev, { role: 'bot', text: userMessage }]);
     } finally {
       setIsTyping(false);
     }
